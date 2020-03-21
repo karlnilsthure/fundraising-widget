@@ -14,13 +14,13 @@ const Bar = styled.div`
   left: 0px;
   bottom: 0px;
   background-color: #20a1d4;
-  width: 75%;
+  width: ${props => props.percentFunded}%;
 `;
 
 export const ProgressBar = props => {
   return (
     <ProgressBarContainer>
-      <Bar></Bar>
+      <Bar {...props}></Bar>
     </ProgressBarContainer>
   );
 };

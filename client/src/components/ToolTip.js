@@ -12,10 +12,11 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-export const ToolTip = () => {
+export const ToolTip = ({ percentFunded }) => {
   return (
     <Wrapper>
-      <strong id="fundraise_remainingText">0%</strong> of the goal funded
+      <strong id="fundraise_remainingText">{percentFunded}%</strong> of the goal
+      funded
     </Wrapper>
   );
 };

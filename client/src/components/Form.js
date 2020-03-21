@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -6,9 +6,10 @@ const Input = styled.input`
   padding: 11px;
   border-radius: 5px;
   border: 1px solid #eaeaea;
+  margin-right: 6px;
 `;
 
-const Button = styled.button`
+const SubmitButton = styled.input`
   padding: 12px;
   background-color: #1cbc2c;
   border: 0px;
@@ -16,11 +17,23 @@ const Button = styled.button`
   border-radius: 5px;
 `;
 
-export const Form = () => {
+export const Form = ({ submitPledgeCallback }) => {
+  const [value, setValue] = useState("");
   return (
-    <form>
-      <Input type="text" />
-      <Button type="submit">Pledge</Button>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        submitPledgeCallback(value * 1);
+        setValue("");
+      }}
+    >
+      <Input
+        type="text"
+        onChange={e => setValue(e.target.value)}
+        value={value}
+        autoFocus
+      />
+      <SubmitButton type="submit" value="Pledge" />
     </form>
   );
 };

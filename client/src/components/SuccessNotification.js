@@ -15,11 +15,13 @@ const Link = styled.a`
   color: #000;
 `;
 
-export const SuccessNotification = props => {
+export const SuccessNotification = ({ onCloseCallback }) => {
   return (
     <Container>
       <span>Thank you for your pledge! </span>
-      <Link href="#">Close</Link>
+      <Link onClick={() => onCloseCallback()} href="#">
+        Close
+      </Link>
     </Container>
   );
 };
