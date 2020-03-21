@@ -17,12 +17,27 @@ const SubmitButton = styled.input`
   border-radius: 5px;
 `;
 
-export const Form = ({ submitPledgeCallback }) => {
+export const Form = ({ submitPledgeCallback, showErrorNotification }) => {
   const [value, setValue] = useState("");
+
   return (
     <form
       onSubmit={e => {
         e.preventDefault();
+
+        if (!/^[0-9]*$/.test(value)) {
+          showErrorNotification("Integer numbers, please!");
+          return;
+        }
+        if (value === "") {
+          showErrorNotification("No pledge?");
+          return;
+        }
+        if (value < 1) {
+          showErrorNotification("Pledge at least 1$!");
+          return;
+        }
+
         submitPledgeCallback(value * 1);
         setValue("");
       }}

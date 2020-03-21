@@ -7,11 +7,6 @@ import { SuccessNotification } from "./components/SuccessNotification";
 import { ErrorNotification } from "./components/ErrorNotification";
 import { Form } from "./components/Form";
 
-const MainWrapper = styled.div`
-  margin: 2em auto;
-  max-width: 630px;
-`;
-
 const BoxFrame = styled.div`
   width: 250px;
   border: 1px solid #eaeaea;
@@ -26,6 +21,7 @@ export const Widget = () => {
   const [moneyRaised, setMoneyRaised] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const submitPledge = pledge => {
     setShowSuccess(true);
@@ -33,17 +29,19 @@ export const Widget = () => {
   };
 
   const percentFunded = (moneyRaised / 1000) * 100;
+  const showForm = !showSuccess && !showError;
 
-  console.log(percentFunded);
   return (
-    <MainWrapper>
+    <div>
       <h2>The fundraising widget</h2>
-      <ToolTip />
+      <ToolTip percentFunded={percentFunded} />
       <BoxFrame>
         <ProgressBar percentFunded={percentFunded} />
         <BoxFrameContent>
           <p>
-            Only 3 days left to fund this project,{" "}
+            {percentFunded < 100 && (
+              <span>Only 3 days left to fund this project, </span>
+            )}
             <strong>${moneyRaised}</strong> has been raised towards the goal to
             raise <strong>$1000</strong>.
           </p>
@@ -51,17 +49,28 @@ export const Widget = () => {
             Pledge money by entering the sum in the field below and press
             pledge, we already know your credit card details.
           </p>
-          {!showSuccess && <Form submitPledgeCallback={submitPledge} />}
+          {showForm && (
+            <Form
+              submitPledgeCallback={submitPledge}
+              showErrorNotification={message => {
+                setErrorMessage(message);
+                setShowError(true);
+              }}
+            />
+          )}
           {showSuccess && (
             <SuccessNotification
               onCloseCallback={() => setShowSuccess(false)}
             />
           )}
           {showError && (
-            <ErrorNotification onCloseCallback={() => setShowError(false)} />
+            <ErrorNotification
+              message={errorMessage}
+              onCloseCallback={() => setShowError(false)}
+            />
           )}
         </BoxFrameContent>
       </BoxFrame>
-    </MainWrapper>
+    </div>
   );
 };

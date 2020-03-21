@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   border: 1px solid;
   border-radius: 5px;
   padding: 10px;
@@ -17,12 +17,12 @@ const Link = styled.a`
 
 export const SuccessNotification = ({ onCloseCallback }) => {
   return (
-    <Container>
+    <Wrapper>
       <span>Thank you for your pledge! </span>
       <Link onClick={() => onCloseCallback()} href="#">
         Close
       </Link>
-    </Container>
+    </Wrapper>
   );
 };
 

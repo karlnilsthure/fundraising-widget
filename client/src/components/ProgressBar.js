@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const ProgressBarContainer = styled.div`
+const Wrapper = styled.div`
   position: relative;
   height: 12px;
   border-bottom: 1px solid #eaeaea;
@@ -13,15 +13,17 @@ const Bar = styled.div`
   top: 0px;
   left: 0px;
   bottom: 0px;
-  background-color: #20a1d4;
-  width: ${props => props.percentFunded}%;
+  background-color: ${({ percentFunded }) =>
+    percentFunded >= 100 ? "#1CBC2C" : "#ef5f3c"};
+  width: ${({ percentFunded }) =>
+    percentFunded >= 100 ? 100 : percentFunded}%;
 `;
 
 export const ProgressBar = props => {
   return (
-    <ProgressBarContainer>
+    <Wrapper>
       <Bar {...props}></Bar>
-    </ProgressBarContainer>
+    </Wrapper>
   );
 };
 

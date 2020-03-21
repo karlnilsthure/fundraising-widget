@@ -15,8 +15,13 @@ const Wrapper = styled.div`
 export const ToolTip = ({ percentFunded }) => {
   return (
     <Wrapper>
-      <strong id="fundraise_remainingText">{percentFunded}%</strong> of the goal
-      funded
+      {percentFunded < 100 ? (
+        <span>
+          <strong>{percentFunded}%</strong> of the goal funded
+        </span>
+      ) : (
+        <span>Hurray! We are funded.</span>
+      )}
     </Wrapper>
   );
 };
