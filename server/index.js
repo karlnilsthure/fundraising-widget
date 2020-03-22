@@ -1,8 +1,8 @@
+const fs = require("fs");
 const express = require("express");
+
 const app = express();
 const port = 4000;
-
-const fs = require("fs");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
