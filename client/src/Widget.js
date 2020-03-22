@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import styled from "styled-components";
 import { ToolTip } from "./components/ToolTip";
@@ -18,18 +18,42 @@ const BoxFrameContent = styled.div`
 `;
 
 export const Widget = () => {
-  const [moneyRaised, setMoneyRaised] = useState(0);
+  const [isFetching, setIsFetching] = useState(false);
+  const [moneyRaised, setMoneyRaised] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const submitPledge = pledge => {
+    setIsFetching(true);
+    fetch("http://localhost:4000/api/addNewPledge", {
+      method: "POST",
+      body: JSON.stringify({ pledge })
+    })
+      .then(res => res.json())
+      .then(({ totalAmount }) => {
+        setMoneyRaised(totalAmount);
+        setIsFetching(false);
+      });
     setShowSuccess(true);
-    setMoneyRaised(moneyRaised + pledge);
   };
 
   const percentFunded = (moneyRaised / 1000) * 100;
   const showForm = !showSuccess && !showError;
+
+  useEffect(() => {
+    if (moneyRaised === null) {
+      setIsFetching(true);
+      fetch("http://localhost:4000/api/totalAmountPledged")
+        .then(res => res.json())
+        .then(({ totalAmount }) => {
+          setMoneyRaised(totalAmount);
+          setIsFetching(false);
+        });
+    }
+  }, []);
+
+  if (isFetching) return <div>Loading widget..</div>;
 
   return (
     <div>

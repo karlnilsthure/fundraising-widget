@@ -1,0 +1,12 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for fundraising widget",
+  "main": "index.js",
+  "repository": "https://github.com/karlnilsthure/fundraising-widget",
+  "author": "Nils Andersson",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
